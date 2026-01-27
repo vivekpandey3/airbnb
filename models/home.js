@@ -1,31 +1,19 @@
-// Core Modules
-const fs = require("fs");
-const path = require("path");
-const rootDir = require("../utils/pathUtil");
+const mongoose = require("mongoose");
+const Favourite = require("./favourite"); // Correct import
 
-module.exports = class Home {
-  constructor(houseName, price, location, rating, photoUrl) {
-    this.houseName = houseName;
-    this.price = price;
-    this.location = location;
-    this.rating = rating;
-    this.photoUrl = photoUrl;
-  }
+const homeSchema = new mongoose.Schema({
+  houseName: { type: String, required: true },
+  price: { type: Number, required: true },
+  rating: { type: Number, required: true },
+  photo: String,
+  description: String,
+});
 
-  save() {
-    Home.fetchAll((registeredHomes) => {
-      registeredHomes.push(this);
-      const homeDataPath = path.join(rootDir, "data", "homes.json");
-      fs.writeFile(homeDataPath, JSON.stringify(registeredHomes), (error) => {
-        console.log("File Writing Concluded", error);
-      });
-    });
-  }
+// Pre-hook to delete favourites when a home is deleted
+homeSchema.pre("findOneAndDelete", async function (next) {
+  const homeId = this.getQuery()._id;
+  await Favourite.deleteMany({ houseId: homeId }); // fixed field name
+  next();
+});
 
-  static fetchAll(callback) {
-    const homeDataPath = path.join(rootDir, "data", "homes.json");
-    fs.readFile(homeDataPath, (err, data) => {
-      callback(!err ? JSON.parse(data) : []);
-    });
-  }
-};
+module.exports = mongoose.model("Home", homeSchema);

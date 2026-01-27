@@ -1,0 +1,4 @@
+<% /* Button to remove a home from favourites. Expects 'home' object with 'id' property. */ %>
+<form action="/favourites/delete/<%= home.id %>" method="POST" style="display:inline;">
+  <button type="submit" class="bg-red-400 p-2 hover:bg-red-600 text-white rounded">Remove from Favourite</button>
+</form>

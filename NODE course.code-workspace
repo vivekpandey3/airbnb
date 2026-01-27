@@ -7,5 +7,7 @@
 			"path": "../../React-"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"git.ignoreLimitWarning": true
+	}
 }
