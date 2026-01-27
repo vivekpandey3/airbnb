@@ -2,11 +2,12 @@
   "name": "airbnb",
   "version": "1.0.0",
   "main": "app.js",
-  "scripts": {
-    "dev": "nodemon app.js",
-    "build:css": "tailwindcss -i ./views/input.css -o ./public/output.css",
-    "start": "node app.js"
-  },
+ "scripts": {
+  "dev": "nodemon app.js",
+  "build:css": "npx tailwindcss -i ./views/input.css -o ./public/output.css",
+  "start": "node app.js"
+}
+,
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "connect-mongodb-session": "^5.0.0",
