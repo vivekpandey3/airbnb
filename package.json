@@ -4,6 +4,7 @@
   "main": "app.js",
   "scripts": {
     "dev": "nodemon app.js",
+    "build": "npm run build:css",
     "build:css": "npx @tailwindcss/cli -i ./views/input.css -o ./public/output.css",
     "start": "node app.js"
   },
